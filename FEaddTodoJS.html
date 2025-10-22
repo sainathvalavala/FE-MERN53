@@ -7,8 +7,8 @@
   </head>
   <body>
     <form onsubmit="sendTodo(event)">
-      <label for="todoTask" name="todoTask">Enter a Todo:</label>
-      <input type="text" name="todoTask" /><br />
+      <label for="todoTask" name="title">Enter a Todo:</label>
+      <input type="text" name="title" /><br />
       <label for="user" name="username">User:</label>
       <input type="text" name="username" /><br />
       <label for="remarks" name="remarks">Remarks:</label>
@@ -16,22 +16,26 @@
       <button type="submit">AddTodo</button>
     </form>
     <script>
+      //sending form data through javsacript fetch post method
+      //if we send data through form action, page will refresh for every submit button and the old data will be lost.
       function sendTodo(ev) {
-        ev.preventDefault();
+        ev.preventDefault(); //when using event object, form will submit everytime , so to stop submiting we used event.preventDefault()
         var fd = new FormData(ev.target);
         var newTodo = {
-          todoTask: "",
+          title: "",
           username: "",
           remarks: "",
         };
-        newTodo.todoTask = fd.get("todoTask");
+        newTodo.title = fd.get("title");
         newTodo.username = fd.get("username");
         newTodo.remarks = fd.get("remarks");
+        //Destructuring
         // const newTodo = {
         //   todoTask: fd.get("todoTask"),
         //   username: fd.get("username"),
         //   remarks: fd.get("remarks"),
         // };
+        // console.log(newTodo)
         fetch("http://localhost:4000/postTodo", {
           method: "POST",
           headers: {
